@@ -107,3 +107,38 @@
 (s/conform ::same-evens-odds [2 3 5 4])
 (s/explain-str ::same-evens-odds [2 :hi 3])
 (s/explain-str ::same-evens-odds [2 3 4])
+
+
+(s/def ::combined-spec (s/and (s/cat :vec vector? :num number?)
+                                                  #(< (count (:vec %)) (:num %))))
+(s/conform ::combined-spec [[7 8] 3])
+
+
+;; Functions
+(defn ranged-rand
+  [start end]
+  (+ start (long (rand (- end start)))))
+
+(s/fdef ranged-rand
+        :args (s/and (s/cat :start int? :end int?)
+                     #(< (:start %) (:end %)))
+        :ret int?
+        :fn (s/and #(>= (:ret %) (-> % :args :start))
+                   #(< (:ret %) (-> % :args :end))))
+
+(stest/instrument `ranged-rand)
+;(ranged-rand 8 5)
+
+;(stest/unstrument `ranged-rand)
+
+(stest/check `ranged-rand)
+
+;; s/nilable and use of any?
+(defn add-front
+  [x v]
+  (into [x] v))
+
+(s/fdef add-front
+        :args (s/cat :elem any? :vec (s/nilable vector?))
+        :ret (s/and vector? #(> (count %) 0))
+        :fn #(= (first (:ret %)) (:elem (:args %))))
