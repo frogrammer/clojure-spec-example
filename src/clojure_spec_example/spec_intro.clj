@@ -96,3 +96,14 @@
 (s/explain-str (s/? keyword?) [:hi :bye])
 
 ;; Combined regexes:
+(s/def ::odds-then-maybe-even (s/cat :odds (s/+ odd?) :even (s/? even?)))
+(s/conform ::odds-then-maybe-even [1 3 5 100])
+(s/conform ::odds-then-maybe-even [1])
+(s/explain-str ::odds-then-maybe-even [2])
+(s/explain-str ::odds-then-maybe-even [1 2 3])
+
+;; Using s/& for additional constraints:
+(s/def ::same-evens-odds (s/& (s/* int?) #(= (count (filter odd? %)) (count (filter even? %)))))
+(s/conform ::same-evens-odds [2 3 5 4])
+(s/explain-str ::same-evens-odds [2 :hi 3])
+(s/explain-str ::same-evens-odds [2 3 4])
