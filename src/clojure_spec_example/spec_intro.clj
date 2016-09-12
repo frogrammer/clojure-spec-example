@@ -18,7 +18,28 @@
 
 ;; register specs in fully qualified namespaces
 (s/def ::suit #{:club :diamond :heart :spade})
+(println ::suit) ;; :clojure-spec-example.spec_intro/suit
 
+;; prints the explanation to standard outupt:
 (s/explain ::suit 42)
+;; returns the failure message as a string:
 (s/explain-str ::suit 42)
+;; returns explantaion of failure as a map:
 (s/explain-data ::suit 42)
+;; spec passes, returns nil:
+(s/explain ::suit :club)
+
+
+;; s/and:
+(s/def ::big-even (s/and int? even? #(> % 1000)))
+(s/conform ::big-even 1002)
+(s/conform ::big-even :foo)
+(s/explain-data ::big-even :foo)
+(s/explain-data ::big-even 1001)
+
+;; s/or:
+(s/def ::name-or-id (s/or :name string? :id int?))
+(s/conform ::name-or-id "abc")
+(s/conform ::name-or-id 3)
+(s/explain-str ::name-or-id 3.5)
+(s/explain-data ::name-or-id 3.5)
