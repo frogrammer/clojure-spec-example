@@ -43,3 +43,36 @@
 (s/conform ::name-or-id 3)
 (s/explain-str ::name-or-id 3.5)
 (s/explain-data ::name-or-id 3.5)
+
+;; Collections
+
+
+;; s/coll-of is used for vectors, lists, and sets of the same kind of elements:
+(s/conform (s/coll-of keyword?) [:a :b :c])
+(s/conform (s/coll-of keyword?) [:a :b "c"])
+(s/explain-str (s/coll-of keyword?) [:a :b "c"])
+
+;; s/map-of is used for maps of the same key-value types:
+(s/conform (s/map-of keyword? int?) {:a 1 :b 2})
+(s/conform (s/map-of keyword? int?) {:a "1" :b "2"})
+(s/explain-str (s/map-of keyword? int?) {:a "1" :b "2"})
+
+;; s/tuple works for fixed size tuples:
+(s/conform (s/tuple double? double? double?) [3.0 3.5 6.12])
+(s/conform (s/tuple double? double? double?) [3.0 3.5])
+(s/explain-str  (s/tuple double? double? double?) [3.0 3.5])
+
+;; Sequences
+
+
+;; Concatenation s/cat:
+(s/def ::ingredient (s/cat :quantity number? :unit keyword?))
+(s/conform ::ingredient [2 :teaspoon])
+(s/explain-str ::ingredient [:to-taste :salt])
+
+;; Alternatives s/alt:
+(s/def ::even-or-small (s/alt :even even? :small #(< % 42)))
+(s/conform ::even-or-small [100])
+(s/conform ::even-or-small [21])
+(s/conform ::even-or-small [10])
+(s/explain-str ::even-or-small [99])
