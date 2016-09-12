@@ -76,3 +76,23 @@
 (s/conform ::even-or-small [21])
 (s/conform ::even-or-small [10])
 (s/explain-str ::even-or-small [99])
+
+;; s/* matches 0 or more occurrences of a pattern:
+(s/def ::seq-of-keywords (s/* keyword?))
+(s/conform ::seq-of-keywords [:a :b :c])
+(s/conform ::seq-of-keywords [])
+(s/explain-str ::seq-of-keywords [:a "b" :c 6])
+
+;; s/+ matches 1 or more occurrences of a pattern:
+(s/conform (s/+ keyword?) [:a :b :c]) ;; returns [:a :b :c]
+(s/conform (s/+ keyword?) [])
+(s/explain-str (s/+ keyword?) [])
+
+
+;;s/? matches 0 or 1 occurrences of a pattern in a sequence, returns the matched value or nil:
+(s/conform (s/? keyword?) [:hi])
+(s/conform (s/? keyword?) [])
+(s/conform (s/? keyword?) [:hi :bye])
+(s/explain-str (s/? keyword?) [:hi :bye])
+
+;; Combined regexes:
