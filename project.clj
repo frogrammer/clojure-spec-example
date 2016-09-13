@@ -3,7 +3,7 @@
   :url "https://github.com/frogrammer/clojure-spec-example"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.9.0-alpha10"]]
+  :dependencies [[org.clojure/clojure "1.9.0-alpha12"]]
   :main ^:skip-aot clojure-spec-example.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:dev {:dependencies [[org.clojure/test.check "0.9.0"]]}})

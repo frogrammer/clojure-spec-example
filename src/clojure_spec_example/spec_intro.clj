@@ -1,6 +1,7 @@
 (ns clojure-spec-example.spec_intro
-  (require [clojure.spec :as s]
-           [clojure.spec.test :as stest]))
+  (:require [clojure.spec :as s]
+            [clojure.spec.test :as stest]
+            [clojure.spec.gen :as gen]))
 
 
 ;;; specs with predicates: returns the value if it conforms to
@@ -131,7 +132,7 @@
 
 ;(stest/unstrument `ranged-rand)
 
-(stest/check `ranged-rand)
+(println (stest/check `ranged-rand))
 
 ;; s/nilable and use of any?
 (defn add-front

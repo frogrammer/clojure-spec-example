@@ -4,4 +4,4 @@
 (defn -main
   "main function"
   [& args]
-  (load-file "src/clojure_spec_example/spec_errors.clj"))
+  (load-file "src/clojure_spec_example/spec_intro.clj"))
