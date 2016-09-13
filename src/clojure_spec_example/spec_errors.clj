@@ -35,14 +35,14 @@
 
 ;; One possible spec for the core reduce function
 (s/fdef clojure.core/reduce
-        :args (s/cat :check-funtion ifn? :dummy (s/? any?) :check-seqable seqable?))
+  :args (s/cat :check-function ifn? :dummy (s/? any?) :check-seqable seqable?))
 
 ;; Another possible spec for the core reduce function to check the arity first
 ;; (s/fdef clojure.core/reduce
-;;         :args (s/or :two-case (s/and ::length-two
-;;                                      (s/cat :check-function ifn? :check-seqable seqable?))
-;;                     :three-case (s/and ::length-three
-;;                                        (s/cat :check-function ifn? :dummy any? :check-seqable seqable?))))
+;;   :args (s/or :two-case (s/and ::length-two
+;;                                (s/cat :check-function ifn? :check-seqable seqable?))
+;;               :three-case (s/and ::length-three
+;;                                  (s/cat :check-function ifn? :dummy any? :check-seqable seqable?))))
 
 (stest/instrument 'clojure.core/reduce)
 
