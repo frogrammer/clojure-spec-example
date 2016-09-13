@@ -132,7 +132,7 @@
 
 ;(stest/unstrument `ranged-rand)
 
-(println (stest/check `ranged-rand))
+(stest/check `ranged-rand)
 
 ;; s/nilable and use of any?
 (defn add-front
